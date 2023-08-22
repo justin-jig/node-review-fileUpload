@@ -45,9 +45,9 @@ const upload = multer({
     storage : multerS3({
         s3: s3, // s3 인스턴스
         bucket : 'kdt9-justin', // 버킷 name
-        acl : 'public', // 파일 접근권한 (public-read로 해야 업로드 파일 공개)
+        acl : 'public-read', // 파일 접근권한 (public-read로 해야 업로드 파일 공개)
         metadata : function(req,file, cb) {
-            cb(null, {fieldName : file.fieldName});
+            cb(null, {fieldname : file.fieldname});
         },
 
         key: function (req, file, cb) {
