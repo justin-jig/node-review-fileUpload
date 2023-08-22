@@ -33,14 +33,12 @@ const limits = {
 }
 const upload = multer({storage, limits});
 
-
 app.get('/' ,(req,res) => {
-    console.log(req.files);
     res.render('index'); 
 })
 
 app.post('/upload/array', upload.array('files'), (req, res) => {
-    console.log();
+    console.log(req.files);
     res.send({
         files: req.files
     });
