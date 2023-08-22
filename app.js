@@ -18,7 +18,7 @@ app.use('/uploads', express.static(__dirname + '/uploads'));
 //multer 설정
 const storage = multer.diskStorage({
     destination : (req,file,cb) => {
-        cb(null, 'uploads/');
+        cb(null, './uploads/');
     },
     filename : (req, file, cb) => {
         //파일 확장자 추출
