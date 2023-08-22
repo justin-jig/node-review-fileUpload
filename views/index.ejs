@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>index</title>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<style>
+    #resultbox {
+        width: 300px;
+        min-height: 300px;
+        border: 1px solid  #ccc;
+        margin-bottom: 100px;
+        display: flex;
+        flex-direction: column;
+    }
+</style>
+<body>
+    
+    <h1>동적 폼으로 파일 여러개 올리기</h1>
+    
+    <div id="resultbox">
+
+    </div>
+    
+
+    <form onsubmit="fileFormPost(event)">
+        <input type="file" id="file" multiple/>
+        <button type="submit">업로드</button>
+    </form>
+    <script>
+
+        async function fileFormPost (event) {
+            event.preventDefault(); 
+            const file = document.querySelector('#file');
+            const formData = new FormData();
+
+            for (let i = 0; i < file.files.length; i++) { 
+                formData.append("files", file.files[i]); 
+            }
+
+            const resultbox  = document.querySelector('#resultbox');
+
+            try {
+                const fileUploadRes = await axios({
+                    method:'POST',
+                    url :'/upload/array',
+                    data : formData,
+                    header : {
+                        'Content-Type' : 'mutipart-from-data'
+                    }
+                })
+
+                if (fileUploadRes.data.files.length) {
+
+                    let renderHtml ='';
+                    for ( let i = 0; i < fileUploadRes.data.files.length; i++) { 
+                        renderHtml += `<img src=${fileUploadRes.data.files[i].path} />`
+                    }
+                    resultbox.innerHTML = renderHtml
+                } 
+            } catch (err) {
+                console.log(err);
+            }
+        }
+    </script>
+</body>
+</html>
