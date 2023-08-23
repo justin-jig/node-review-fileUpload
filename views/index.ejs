@@ -55,7 +55,7 @@
 
                     let renderHtml ='';
                     for ( let i = 0; i < fileUploadRes.data.files.length; i++) { 
-                        renderHtml += `<img src=${fileUploadRes.data.files[i].path} />`
+                        renderHtml += `<img src=${fileUploadRes.data.files[i].location} />`
                     }
                     resultbox.innerHTML = renderHtml
                 } 
